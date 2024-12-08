@@ -38,25 +38,25 @@ class RegisterNameFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_register_name, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        //register.xmlにあるnextボタンを呼び出す
-        val button = view.findViewById<Button>(R.id.next)
-        button.setOnClickListener{
-            //FragmentMangerの取得
-            val rnfm = parentFragmentManager
-
-            //トランザクションの生成・コミット
-            val ft = rnfm.beginTransaction()
-            ft.apply {
-                replace(R.id.fragmentContainerView, RegisterGenderFragment())
-                commit()
-            }
-        }
-
-
-    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//
+//        //register.xmlにあるnextボタンを呼び出す
+//        val button = view.findViewById<Button>(R.id.next)
+//        button.setOnClickListener{
+//            //FragmentMangerの取得
+//            val rnfm = parentFragmentManager
+//
+//            //トランザクションの生成・コミット
+//            val ft = rnfm.beginTransaction()
+//            ft.apply {
+//                replace(R.id.fragmentContainerView, RegisterGenderFragment())
+//                commit()
+//            }
+//        }
+//
+//
+//    }
 
     companion object {
         /**
