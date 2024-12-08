@@ -1,11 +1,13 @@
 package com.akapp.shinrai_v2
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,19 +42,60 @@ class RegisterBloodTypeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //FragmentMangerの取得
+        val rbtfm = parentFragmentManager
 
-        //nextボタンクリックイベント
-        val button = view.findViewById<Button>(R.id.next)
-        button.setOnClickListener {
-            //FragmentMangerの取得
-            val rbtfm = parentFragmentManager
+        //トランザクションの生成・コミット
+        val fm = rbtfm.beginTransaction()
 
-            //トランザクションの生成・コミット
-            val fm = rbtfm.beginTransaction()
+        //　ボタンをデザインを配置するコンテナを取得
+        val buttonContainer = view.findViewById<LinearLayout>(R.id.dynamic_button_container)
+
+        //　配列でボタンのラベルを管理
+        val buttonLabels = listOf("A型","B型","O型","AB型")
+
+        //　必要な要素を取得
+        val frontButton = requireActivity().findViewById<Button>(R.id.front)
+        val nextButton = requireActivity().findViewById<Button>(R.id.next)
+
+        frontButton.setOnClickListener{
+            fm.apply{
+                replace(R.id.fragmentContainerView, RegisterGenderFragment())
+                commit()
+            }
+        }
+        nextButton.setOnClickListener {
             fm.apply {
                 replace(R.id.fragmentContainerView, RegisterPersonalityFragment())
                 commit()
             }
+        }
+
+        //ボタンを動的に追加
+        for(label in buttonLabels){
+            val button = Button(requireActivity()).apply{
+                text = label
+
+                //LinearLayout.LayoutParams(幅、高さ)
+                //レイアウト設定（幅、高さ、マージン）
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply{
+                    //setMargins(left, top, right, bottom)
+                    setMargins(20, 10, 20, 10)
+                }
+                textSize = 16f
+                setTextColor(Color.parseColor("#000000"))
+                setBackgroundResource(R.drawable.bt_gender_selection)
+            }
+            //ボタンクリック時の動作を設定
+            button.setOnClickListener{
+                //クリックイベントの処理
+                println("Clicked: $label")
+            }
+
+            buttonContainer.addView(button)
         }
     }
 

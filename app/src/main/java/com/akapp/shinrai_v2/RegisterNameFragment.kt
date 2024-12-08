@@ -1,5 +1,6 @@
 package com.akapp.shinrai_v2
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -38,25 +39,35 @@ class RegisterNameFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_register_name, container, false)
     }
 
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//        //register.xmlにあるnextボタンを呼び出す
-//        val button = view.findViewById<Button>(R.id.next)
-//        button.setOnClickListener{
-//            //FragmentMangerの取得
-//            val rnfm = parentFragmentManager
-//
-//            //トランザクションの生成・コミット
-//            val ft = rnfm.beginTransaction()
-//            ft.apply {
-//                replace(R.id.fragmentContainerView, RegisterGenderFragment())
-//                commit()
-//            }
-//        }
-//
-//
-//    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //FragmentMangerの取得
+        val rnfm = parentFragmentManager
+        //トランザクションの生成・コミット
+        val ft = rnfm.beginTransaction()
+
+        // register.xmlにあるnextボタンを呼び出す
+        //val next = view.findViewById<Button>(R.id.next)
+        // フラグメントからアクティビティ側のビューにアクセスするには、
+        // requireActivity()を介してアクティビティのコンテキストを取得し、findViewById()を行う
+        val frontButton = requireActivity().findViewById<Button>(R.id.front)
+        val nextButton = requireActivity().findViewById<Button>(R.id.next)
+
+        frontButton.setOnClickListener {
+            // RegisterActivityの画面からMainActivityの画面に遷移
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        nextButton.setOnClickListener{
+            ft.apply {
+                replace(R.id.fragmentContainerView, RegisterGenderFragment())
+                commit()
+            }
+        }
+
+
+    }
 
     companion object {
         /**

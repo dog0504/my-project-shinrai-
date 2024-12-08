@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +36,36 @@ class RegisterMbtiFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_register_mbti, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        //fragmentの取得
+        val mfm = parentFragmentManager
+
+        //トランザクションの生成・コミット
+        val fm = mfm.beginTransaction()
+
+        // 必要な要素をactivityから取得
+        val frontButton = requireActivity().findViewById<Button>(R.id.front)
+        val nextButton = requireActivity().findViewById<Button>(R.id.next)
+
+        // 取得したボタンのクリックリスナー
+        frontButton.setOnClickListener {
+            fm.apply {
+                replace(R.id.fragmentContainerView, RegisterPersonalityFragment())
+                commit()
+            }
+        }
+
+        nextButton.setOnClickListener {
+            fm.apply {
+                replace(R.id.fragmentContainerView, RegisterHobbyFragment())
+                commit()
+            }
+        }
+
     }
 
     companion object {

@@ -46,13 +46,25 @@ class RegisterPersonalityFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //nextクリックイベント
-        val button = view.findViewById<Button>(R.id.next)
-        button.setOnClickListener {
-            //FragmentMangerの取得
-            val rpf = parentFragmentManager
-            //トランザクションの生成・コミット
-            val fm = rpf.beginTransaction()
+        //FragmentMangerの取得
+        val rpf = parentFragmentManager
+        //トランザクションの生成・コミット
+        val fm = rpf.beginTransaction()
+
+        //　必要な要素を取得
+        val frontButton = requireActivity().findViewById<Button>(R.id.front)
+        val nextButton = requireActivity().findViewById<Button>(R.id.next)
+
+        // 取得したボタンのクリックリスナー（front)
+        frontButton.setOnClickListener {
+            fm.apply {
+                replace(R.id.fragmentContainerView, RegisterPersonalityFragment())
+                commit()
+            }
+        }
+
+        // 取得したボタンのクリックリスナー(next)
+        nextButton.setOnClickListener {
             fm.apply {
                 replace(R.id.fragmentContainerView, RegisterMbtiFragment())
                 commit()

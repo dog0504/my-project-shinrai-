@@ -44,20 +44,32 @@ class RegisterGenderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
 
-        //ボタンをデザインを配置するコンテナを取得
+        //　ボタンをデザインを配置するコンテナを取得
         val buttonContainer = view.findViewById<LinearLayout>(R.id.dynamic_button_container)
 
-        //配列でボタンのラベルを管理
+        //　配列でボタンのラベルを管理
         val buttonLabels = listOf("男性","女性")
 
-        //nextボタンを押下するクリックイベント
-        val button = view.findViewById<Button>(R.id.next)
-        button.setOnClickListener{
-            //FragmentMangerの取得
-            val rgfm = parentFragmentManager
+        //　必要なボタンを取得
+        val nextButton = requireActivity().findViewById<Button>(R.id.next)
+        val frontButton = requireActivity().findViewById<Button>(R.id.front)
 
-            //トランザクションの生成・コミット
-            val fm = rgfm.beginTransaction()
+        //FragmentMangerの取得
+        val rgfm = parentFragmentManager
+
+        //トランザクションの生成・コミット
+        val fm = rgfm.beginTransaction()
+
+        //　取得したfrontボタンのクリックイベント
+        frontButton.setOnClickListener {
+            fm.apply {
+                replace(R.id.fragmentContainerView, RegisterNameFragment())
+                commit()
+            }
+        }
+        //　取得したnextボタンのクリックイベント
+        nextButton.setOnClickListener{
+
             fm.apply {
                 replace(R.id.fragmentContainerView, RegisterBloodTypeFragment())
                 commit()

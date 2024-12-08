@@ -1,5 +1,6 @@
 package com.akapp.shinrai_v2
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -45,9 +46,6 @@ class RegisterHobbyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //ボタンクリックイベント
-        val button = view.findViewById<Button>(R.id.next)
-
         //エディットテキスト入力ボックス
         val editText = view.findViewById<EditText>(R.id.edit_lover_hobby)
 
@@ -56,6 +54,17 @@ class RegisterHobbyFragment : Fragment() {
 
         // ボタンのラベルをリストとして定義
         val buttonLabels = listOf("運動","勉強","読書","ランニング","ロマンス映画","JPOP","KPOP","POP")
+
+        //　FragmentMangerの取得
+        val rhf = parentFragmentManager
+
+        //　トランザクションの生成・コミット
+        val fm = rhf.beginTransaction()
+
+        //　必要な要素をActivityから取得
+        val frontButton = requireActivity().findViewById<Button>(R.id.front)
+        val nextButton = requireActivity().findViewById<Button>(R.id.next)
+
 
         editText.setOnEditorActionListener{ _, _, _ ->
             val input_hobby_Text = editText.text.toString().trim()//入力したテキスト取得
@@ -68,23 +77,45 @@ class RegisterHobbyFragment : Fragment() {
             }
         }
 
-        //　ボタンを動的に追加
-        for(label in buttonLabels) {
-            addHobbyButton(label, buttonContainer)
+        for(label in buttonLabels){
+            val personality_button = Button(requireContext()).apply{
+                text = label
 
+                //LinearLayout.LayoutParams(幅、高さ)
+                //レイアウト設定（幅、高さ、マージン）
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply{
+                    //setMargins(left, top, right, bottom)
+                    setMargins(20, 10, 20, 10)
+                }
+                textSize = 16f
+                setTextColor(Color.parseColor("#000000"))
+                setBackgroundResource(R.drawable.bt_gender_selection)
+            }
+            //ボタンクリック時の動作を設定
+            personality_button.setOnClickListener{
+                //クリックイベントの処理
+                println("Clicked: $label")
+            }
+
+            buttonContainer.addView(personality_button)
         }
 
-        button.setOnClickListener {
-            //FragmentMangerの取得
-            val rhf = parentFragmentManager
-            //トランザクションの生成・コミット
-            val fm = rhf.beginTransaction()
+        frontButton.setOnClickListener {
             fm.apply {
-                replace(R.id.fragmentContainerView, RegisterHobbyFragment())
+                replace(R.id.fragmentContainerView, RegisterMbtiFragment())
                 commit()
             }
         }
 
+        nextButton.setOnClickListener {
+            fm.apply {
+                replace(R.id.fragmentContainerView, RegisterConfirmFragment())
+                commit()
+            }
+        }
 
 
 
