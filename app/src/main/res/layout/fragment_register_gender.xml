@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".RegisterGenderFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/h1TextStyle_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/lover_gender"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/h3TextStyle_thin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/lover_gender_description"
+            android:gravity="center"
+            />
+
+        <LinearLayout
+            android:id="@+id/dynamic_button_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

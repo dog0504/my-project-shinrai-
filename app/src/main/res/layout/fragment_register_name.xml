@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".RegisterNameFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/lover_id"
+            style="@style/h1TextStyle_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lover_id"
+            />
+        <TextView
+            android:id="@+id/description"
+            style="@style/h3TextStyle_thin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-8dp"
+            android:text="@string/lover_id_description"
+            />
+        <EditText
+            android:id="@+id/edit_lover_id"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="18dp"
+
+            android:background="@drawable/edit_background"
+            android:hint="@string/hint_name"
+            android:paddingStart="15dp"
+
+            tools:ignore="RtlSymmetry" />
+
+
+    </LinearLayout>
+</FrameLayout>

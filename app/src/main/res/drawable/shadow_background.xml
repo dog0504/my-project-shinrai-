@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 影のレイヤー -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#70B1B1B1" /> <!-- 半透明の影 -->
+            <corners android:radius="7dp" />
+            <padding
+                android:right="2dp"
+                android:left="1dp"
+                android:bottom="4dp" />
+        </shape>
+    </item>
+
+    <!-- メインの背景レイヤー -->
+    <item>
+        <shape android:shape="rectangle">
+            <stroke
+                android:color="@color/black"
+                android:width="0.7dp" />
+            <solid android:color="@color/white" />
+            <corners android:radius="7dp" />
+        </shape>
+    </item>
+</layer-list>
