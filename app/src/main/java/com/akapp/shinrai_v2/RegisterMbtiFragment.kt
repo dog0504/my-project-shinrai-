@@ -1,11 +1,19 @@
 package com.akapp.shinrai_v2
 
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
+import android.widget.EditText
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import java.security.Key
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,6 +59,36 @@ class RegisterMbtiFragment : Fragment() {
         val frontButton = requireActivity().findViewById<Button>(R.id.front)
         val nextButton = requireActivity().findViewById<Button>(R.id.next)
 
+        //　必要な要素をfragmentから取得
+        val editText = view.findViewById<EditText>(R.id.edit_lover_id)
+        val frameLayout = view.findViewById<FrameLayout>(R.id.frame_lover_mbti_color)
+        val imageView = view.findViewById<ImageView>(R.id.image_lover_mbti_type)
+        val textView = view.findViewById<TextView>(R.id.text_lover_mbti_type)
+
+        //　Enterキー押下時のリスナー設定(IME_ACTION_SEARCHなどのactionを設定しておく)
+        editText.setOnEditorActionListener { v, actionid, event ->
+            if(actionid == EditorInfo.IME_ACTION_SEARCH ||
+                (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)){
+
+                val inputMbti = editText.text.toString().trim().uppercase()
+                //　入力値に基づく処理例
+                //　MBTIタイプに応じた画像や背景drawableを定義済みのマップから取得することを想定
+                val mbtiData = MbtiResourceMap[inputMbti]
+
+                if (mbtiData != null){
+                    //　画像・フレーム背景設定
+                    frameLayout.setBackgroundResource(mbtiData.frameDrawableRes)
+                    imageView.setImageResource(mbtiData.imageRes)
+                    textView.setText(mbtiData.displayName)
+                }else{
+                    // 対応するMBTIタイプがない場合のハンドリング
+                    Toast.makeText(requireContext(), "対応するMBTIが見つかりません", Toast.LENGTH_SHORT).show()
+                }
+                true
+            }else{
+                false
+            }
+        }
         // 取得したボタンのクリックリスナー
         frontButton.setOnClickListener {
             fm.apply {

@@ -43,20 +43,30 @@
             />
 
         <FrameLayout
-            android:layout_width="230dp"
-            android:layout_height="185dp"
+            android:id="@+id/frame_lover_mbti_color"
+            android:layout_width="300dp"
+            android:layout_height="250dp"
             android:layout_marginTop="27dp"
             android:background="@drawable/mbti_layout"
             android:layout_gravity="center_horizontal"
             >
             <TextView
+                android:id="@+id/text_lover_mbti_type"
                 android:layout_width="140dp"
-                android:layout_height="30dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/mbti_title_layout"
                 />
+            <ImageView
+                android:id="@+id/image_lover_mbti_type"
+                android:layout_width="280dp"
+                android:layout_height="180dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:background="@drawable/mbti_image_background"
+                app:backgroundTint="@null" />
 
         </FrameLayout>
     </LinearLayout>
