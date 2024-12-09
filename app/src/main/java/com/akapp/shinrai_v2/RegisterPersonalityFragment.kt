@@ -58,7 +58,7 @@ class RegisterPersonalityFragment : Fragment() {
         // 取得したボタンのクリックリスナー（front)
         frontButton.setOnClickListener {
             fm.apply {
-                replace(R.id.fragmentContainerView, RegisterPersonalityFragment())
+                replace(R.id.fragmentContainerView, RegisterBloodTypeFragment())
                 commit()
             }
         }
