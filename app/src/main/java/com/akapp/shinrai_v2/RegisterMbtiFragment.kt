@@ -56,14 +56,17 @@ class RegisterMbtiFragment : Fragment() {
         val fm = mfm.beginTransaction()
 
         // 必要な要素をactivityから取得
-        val frontButton = requireActivity().findViewById<Button>(R.id.front)
-        val nextButton = requireActivity().findViewById<Button>(R.id.next)
+        val frontButton = requireActivity().findViewById<Button>(R.id.front) //前へボタン
+        val nextButton = requireActivity().findViewById<Button>(R.id.next) //次へボタン
 
         //　必要な要素をfragmentから取得
         val editText = view.findViewById<EditText>(R.id.edit_lover_id)
         val frameLayout = view.findViewById<FrameLayout>(R.id.frame_lover_mbti_color)
         val imageView = view.findViewById<ImageView>(R.id.image_lover_mbti_type)
         val textView = view.findViewById<TextView>(R.id.text_lover_mbti_type)
+
+        // 初期状態でフレームレイアウトを非表示にする
+        frameLayout.visibility = View.GONE
 
         //　Enterキー押下時のリスナー設定(IME_ACTION_SEARCHなどのactionを設定しておく)
         editText.setOnEditorActionListener { v, actionid, event ->
@@ -76,11 +79,18 @@ class RegisterMbtiFragment : Fragment() {
                 val mbtiData = MbtiResourceMap[inputMbti]
 
                 if (mbtiData != null){
+
+                    // 入力値が有効な場合は、フレームを表示させる
+                    frameLayout.visibility = View.VISIBLE
+
                     //　画像・フレーム背景設定
                     frameLayout.setBackgroundResource(mbtiData.frameDrawableRes)
                     imageView.setImageResource(mbtiData.imageRes)
                     textView.setText(mbtiData.displayName)
                 }else{
+
+                    //　入力値が無効な場合は、フレームを非表示にさせる
+                    frameLayout.visibility = View.GONE
                     // 対応するMBTIタイプがない場合のハンドリング
                     Toast.makeText(requireContext(), "対応するMBTIが見つかりません", Toast.LENGTH_SHORT).show()
                 }
