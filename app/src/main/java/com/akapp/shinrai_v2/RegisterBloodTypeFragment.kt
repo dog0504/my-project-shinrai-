@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.GridLayout
 import android.widget.LinearLayout
 
 // TODO: Rename parameter arguments, choose names that match
@@ -76,12 +77,11 @@ class RegisterBloodTypeFragment : Fragment() {
             val button = Button(requireActivity()).apply{
                 text = label
 
-                //LinearLayout.LayoutParams(幅、高さ)
-                //レイアウト設定（幅、高さ、マージン）
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply{
+
+                //GridLayoutはlinearlayoutとは違う
+                layoutParams = GridLayout.LayoutParams().apply{
+                    width= GridLayout.LayoutParams.WRAP_CONTENT
+                    height= GridLayout.LayoutParams.WRAP_CONTENT
                     //setMargins(left, top, right, bottom)
                     setMargins(20, 10, 20, 10)
                 }
