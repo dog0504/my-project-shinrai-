@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.GridLayout
-import android.widget.LinearLayout
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,7 +49,7 @@ class RegisterBloodTypeFragment : Fragment() {
         val fm = rbtfm.beginTransaction()
 
         //　ボタンをデザインを配置するコンテナを取得
-        val buttonContainer = view.findViewById<LinearLayout>(R.id.dynamic_button_container)
+        val buttonContainer = view.findViewById<GridLayout>(R.id.dynamic_button_container)
 
         //　配列でボタンのラベルを管理
         val buttonLabels = listOf("A型","B型","O型","AB型")
