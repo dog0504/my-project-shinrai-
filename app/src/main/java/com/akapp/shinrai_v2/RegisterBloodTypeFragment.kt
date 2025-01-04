@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.GridLayout
+import android.widget.Toast
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,10 +52,26 @@ class RegisterBloodTypeFragment : Fragment() {
         //　ボタンをデザインを配置するコンテナを取得
         val buttonContainer = view.findViewById<GridLayout>(R.id.dynamic_button_container)
 
+        // GridLayoutの列数を設定
+        buttonContainer.columnCount = 2
+
+
         //　配列でボタンのラベルを管理
         val buttonLabels = listOf("A型","B型","O型","AB型")
 
         //　必要な要素を取得
+        //requireActivity().findViewById<Button>(id)はactivityに設定したボタンを探す
+        //view.findViewById<Button>(id)はfragmentにあるボタンを使う
+        //Androidアプリでは、ボタンを探す場所が2つがあります。：
+        //
+        //Activity
+        //
+        //画面全体（アプリのメイン部分）。
+        //例えると「リビング全体」を探している感じ。
+        //Fragment
+        //
+        //画面の一部（そのFragmentが表示している小さな部分）。
+        //例えると「机の上だけ」を探している感じ。
         val frontButton = requireActivity().findViewById<Button>(R.id.front)
         val nextButton = requireActivity().findViewById<Button>(R.id.next)
 
@@ -78,11 +95,15 @@ class RegisterBloodTypeFragment : Fragment() {
 
 
                 //GridLayoutはlinearlayoutとは違う
-                layoutParams = GridLayout.LayoutParams().apply{
+                layoutParams = GridLayout.LayoutParams(
+                    GridLayout.spec(GridLayout.UNDEFINED, 1f),
+                    GridLayout.spec(GridLayout.UNDEFINED, 1f)
+                ).apply{
                     width= GridLayout.LayoutParams.WRAP_CONTENT
                     height= GridLayout.LayoutParams.WRAP_CONTENT
                     //setMargins(left, top, right, bottom)
                     setMargins(20, 10, 20, 10)
+                    gravity = android.view.Gravity.CENTER //ボタンを自体を中央に揃える
                 }
                 textSize = 16f
                 setTextColor(Color.parseColor("#000000"))
@@ -91,7 +112,7 @@ class RegisterBloodTypeFragment : Fragment() {
             //ボタンクリック時の動作を設定
             button.setOnClickListener{
                 //クリックイベントの処理
-                println("Clicked: $label")
+                Toast.makeText(requireContext(), "Clicked:$label", Toast.LENGTH_SHORT).show()
             }
 
             buttonContainer.addView(button)
