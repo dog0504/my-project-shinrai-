@@ -54,13 +54,12 @@
 
             tools:ignore="RtlSymmetry"
             />
-
-        <LinearLayout
+        <GridLayout
             android:id="@+id/hobby_list_button_container"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:gravity="center_horizontal|center_vertical"
+            android:gravity="center"
             android:orientation="horizontal"
             />
     </LinearLayout>

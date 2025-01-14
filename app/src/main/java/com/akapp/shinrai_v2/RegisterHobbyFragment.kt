@@ -2,14 +2,22 @@ package com.akapp.shinrai_v2
 
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
+import android.widget.GridLayout
 import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.constraintlayout.helper.widget.Grid
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
+import com.google.android.flexbox.FlexboxLayout
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,10 +58,9 @@ class RegisterHobbyFragment : Fragment() {
         val editText = view.findViewById<EditText>(R.id.edit_lover_hobby)
 
         // ボタンを追加するコンテナを取得
-        val buttonContainer = view.findViewById<LinearLayout>(R.id.hobby_list_button_container)
+        val buttonListContainer = view.findViewById<GridLayout>(R.id.hobby_list_button_container)
 
-        // ボタンのラベルをリストとして定義
-        val buttonLabels = listOf("運動","勉強","読書","ランニング","ロマンス映画","JPOP","KPOP","POP")
+        buttonListContainer.columnCount = 3
 
         //　FragmentMangerの取得
         val rhf = parentFragmentManager
@@ -66,42 +73,51 @@ class RegisterHobbyFragment : Fragment() {
         val nextButton = requireActivity().findViewById<Button>(R.id.next)
 
 
-        editText.setOnEditorActionListener{ _, _, _ ->
-            val input_hobby_Text = editText.text.toString().trim()//入力したテキスト取得
-            if(input_hobby_Text.isNotEmpty()){
-                addHobbyButton(input_hobby_Text, buttonContainer) // ボタンを追加
-                editText.text.clear() // 入力をクリア
-                true
-            }else{
-                false
-            }
-        }
+        editText.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || // 「完了」ボタンの場合
+                (event != null && event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)) { // エンターキーの場合
 
-        for(label in buttonLabels){
-            val personality_button = Button(requireContext()).apply{
-                text = label
+                val inputText = editText.text.toString()
 
-                //LinearLayout.LayoutParams(幅、高さ)
-                //レイアウト設定（幅、高さ、マージン）
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply{
-                    //setMargins(left, top, right, bottom)
-                    setMargins(20, 10, 20, 10)
+                if (inputText.isNotEmpty()) {
+                    val newButton = Button(requireContext())
+                    newButton.text = inputText
+
+                    newButton.textSize = 16f
+                    newButton.setTextColor(Color.parseColor("#000000"))
+                    newButton.setBackgroundResource(R.drawable.bt_gender_selection)
+
+                    val params = GridLayout.LayoutParams(
+                        GridLayout.spec(GridLayout.UNDEFINED, 1f),
+                        GridLayout.spec(GridLayout.UNDEFINED, 1f)
+                    ).apply {
+                        width = GridLayout.LayoutParams.MATCH_PARENT
+                        height = GridLayout.LayoutParams.WRAP_CONTENT
+
+                        setMargins(20,10,20,10)
+
+                        newButton.gravity = android.view.Gravity.CENTER //ボタンを自体を中央に揃える
+                    }
+                    buttonListContainer.addView(newButton, params)
+
+//                    newButton.setOnClickListener {
+//                        android.widget.Toast.makeText(this, "ボタン「$inputText」が押されました", android.widget.Toast.LENGTH_SHORT).show()
+//                    }
+
+                    // EditTextの内容をクリア
+                    editText.text.clear()
+
+                    return@OnEditorActionListener true // イベントを処理したことを示す
+                } else {
+//                    android.widget.Toast.makeText(this, "テキストを入力してください", android.widget.Toast.LENGTH_SHORT).show()
                 }
-                textSize = 16f
-                setTextColor(Color.parseColor("#000000"))
-                setBackgroundResource(R.drawable.bt_gender_selection)
             }
-            //ボタンクリック時の動作を設定
-            personality_button.setOnClickListener{
-                //クリックイベントの処理
-                println("Clicked: $label")
-            }
+            false // イベントを処理しなかったことを示す
+        })
 
-            buttonContainer.addView(personality_button)
-        }
+
+
+
 
         frontButton.setOnClickListener {
             fm.apply {
@@ -119,31 +135,6 @@ class RegisterHobbyFragment : Fragment() {
 
 
 
-    }
-
-    //ボタンを追加するメソッド
-    private fun addHobbyButton(text: String, container: LinearLayout) {
-        val hobbyButton = Button(requireContext()).apply{
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                //　ボタン間の余白を設定
-                setMargins(20,10,20,10)
-            }
-            this.text = text //ボタンのテキストを設定
-            textSize = 16f
-            setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            setBackgroundResource(R.drawable.bt_gender_selection) // 背景をカスタム
-        }
-        // ボタンクリック時の動作を設定
-        hobbyButton.setOnClickListener {
-            // ボタンのクリックイベント
-            println("Clicked: $text")
-        }
-
-        // コンテナにボタンを追加
-        container.addView(hobbyButton)
     }
 
     companion object {
